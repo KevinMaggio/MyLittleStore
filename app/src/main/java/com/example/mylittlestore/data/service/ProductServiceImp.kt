@@ -1,28 +1,20 @@
 package com.example.mylittlestore.data.service
 
 import com.example.mylittlestore.data.dto.ProductResponse
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.mylittlestore.utils.Constants.CODE_GENERIC
+import com.example.mylittlestore.utils.Constants.TIME_OUT
+import java.io.IOException
 
-class ProductServiceImp {
-
-    private val serviceImp = providerApiImplement()
-
+class ProductServiceImp(private val serviceImp: ProductService = RetrofitClient.getInstance()) {
 
     suspend fun getProducts(): ApiResponse<ProductResponse> {
-        val response = serviceImp?.getProducts()
-        return ApiResponse.create(response?.code() ?: 0, response?.body(), response?.message())
-    }
-
-    private fun providerApiImplement(): ProductService? {
-        return providerRetrofit()?.create(ProductService::class.java)
-    }
-
-    private fun providerRetrofit(): Retrofit? {
-        return Retrofit.Builder()
-            .baseUrl("https://stoplight.io/mocks/refactoringlife/refactoringlife/218091855")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        return try {
+            val response = serviceImp.getProducts()
+            ApiResponse.create(response.code(), response.body(), response.message())
+        } catch (e: IOException) {
+            ApiResponse.create(TIME_OUT, null, null)
+        } catch (e: Exception) {
+            ApiResponse.create(CODE_GENERIC, null, null)
+        }
     }
 }

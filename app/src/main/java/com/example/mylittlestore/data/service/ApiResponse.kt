@@ -31,8 +31,8 @@ class ApiResponse<out T>(var status: Status, val data: T?, val message: String) 
                     Status.ERROR_SERVER
                 }
 
-                999 -> {
-                    Status.ERROR_CONNECTION
+                0 -> {
+                    Status.ERROR_TIME_OUT
                 }
 
                 else -> {
@@ -59,6 +59,10 @@ class ApiResponse<out T>(var status: Status, val data: T?, val message: String) 
                     "ups error - server disconnect"
                 }
 
+                0 -> {
+                    "time out"
+                }
+
                 else -> {
                     "generic error"
                 }
@@ -66,7 +70,7 @@ class ApiResponse<out T>(var status: Status, val data: T?, val message: String) 
         }
 
         enum class Status {
-            SUCCESS, ERROR_QUERY, ERROR_AUTH, ERROR_CONNECTION, ERROR_SERVER, ERROR_GENERIC
+            SUCCESS, ERROR_QUERY, ERROR_AUTH, ERROR_TIME_OUT, ERROR_SERVER, ERROR_GENERIC
         }
     }
 }
