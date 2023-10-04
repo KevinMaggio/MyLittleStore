@@ -5,7 +5,8 @@ import com.example.mylittlestore.utils.Constants.CODE_GENERIC
 import com.example.mylittlestore.utils.Constants.TIME_OUT
 import java.io.IOException
 
-class ProductServiceImp(private val serviceImp: ProductService = RetrofitClient.getInstance()) {
+class ProductServiceImp {
+    private val serviceImp: ProductService = RetrofitClient.getInstance()
 
     suspend fun getProducts(): ApiResponse<ProductResponse> {
         return try {

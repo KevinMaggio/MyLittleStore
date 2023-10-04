@@ -6,15 +6,15 @@ import com.example.mylittlestore.utils.orEmpty
 
 fun ProductResponse?.toProductModel(): ProductModel {
     return ProductModel(
-        totalPages = this?.totalPages ?: 0,
-        page = this?.page ?: 0,
+        totalPages = this?.data?.totalPages ?: 0,
+        page = this?.data?.page ?: 0,
         products = this.toProducts()
     )
 }
 
 private fun ProductResponse?.toProducts(): List<ProductModel.Product> {
     val products = mutableListOf<ProductModel.Product>()
-    this?.products?.forEach { product ->
+    this?.data?.products?.forEach { product ->
         products.add(
             ProductModel.Product(
                 id = product.id ?: 0,
@@ -31,7 +31,7 @@ private fun ProductResponse?.toProducts(): List<ProductModel.Product> {
     return products
 }
 
-private fun ProductResponse.Product.Category.toCategory(): ProductModel.Product.Category {
+private fun ProductResponse.ProductData.Product.Category.toCategory(): ProductModel.Product.Category {
     return ProductModel.Product.Category(
         id = this.id,
         name = this.name

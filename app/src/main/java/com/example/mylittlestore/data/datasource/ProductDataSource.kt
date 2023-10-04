@@ -3,6 +3,7 @@ package com.example.mylittlestore.data.datasource
 import com.example.mylittlestore.data.dto.ProductResponse
 import com.example.mylittlestore.data.service.ApiResponse
 import com.example.mylittlestore.data.service.ProductServiceImp
+import com.example.mylittlestore.utils.Constants.ERROR_CONNECTION
 
 class ProductDataSource (private val service : ProductServiceImp = ProductServiceImp()){
 
@@ -10,9 +11,9 @@ class ProductDataSource (private val service : ProductServiceImp = ProductServic
         return if (connection){
             service.getProducts()
         }else{
-            throw NoConnectionException("Not connection internet")
+            throw ErrorException(ERROR_CONNECTION)
         }
     }
 
-    class NoConnectionException(message: String) : Exception(message)
+    class ErrorException(message: String) : Exception(message)
 }

@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     private const val BASE_URL =
-        "https://stoplight.io/mocks/refactoringlife/refactoringlife/218091855"
+        "https://stoplight.io/mocks/refactoringlife/refactoringlife/218091855/"
 
     fun getInstance(): ProductService {
         return apiService
